@@ -1,0 +1,84 @@
+{
+  "name": "hvp",
+  "displayName": "HVP Language Support",
+  "description": "Syntax highlighting, autocompletion, feature outline (Go to Symbol), and block-imbalance diagnostics for the HVP (Hierarchical Verification Plan) language.",
+  "version": "0.0.1",
+  "publisher": "local",
+  "license": "MIT",
+  "author": "[Your Name]",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/<your-username>/vscode-hvp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/<your-username>/vscode-hvp/issues"
+  },
+  "homepage": "https://github.com/<your-username>/vscode-hvp#readme",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "main": "./out/extension.js",
+  "activationEvents": [
+    "onLanguage:hvp"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "hvp",
+        "aliases": [
+          "HVP",
+          "hvp"
+        ],
+        "extensions": [
+          ".hvp"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "hvp",
+        "scopeName": "source.hvp",
+        "path": "./syntaxes/hvp.tmLanguage.json"
+      }
+    ],
+    "configuration": {
+      "title": "HVP",
+      "properties": {
+        "hvp.server.path": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "Path to a local `hvp-language-server` checkout's launcher (e.g. `/path/to/hvp-language-server/bin/hvp-language-server.js`), for developing against a build of the server other than the one bundled into this extension at build time. Leave empty to use the bundled server."
+        },
+        "hvp.trace.server": {
+          "scope": "window",
+          "type": "string",
+          "enum": [
+            "off",
+            "messages",
+            "verbose"
+          ],
+          "default": "off",
+          "description": "Traces the communication between VS Code and the HVP language server."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p ./ && node esbuild.js",
+    "watch": "tsc -watch -p ./"
+  },
+  "dependencies": {
+    "hvp-language-server": "file:../hvp-language-server",
+    "vscode-languageclient": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^18.19.0",
+    "@types/vscode": "^1.85.0",
+    "esbuild": "^0.28.2",
+    "typescript": "^5.4.0"
+  }
+}
