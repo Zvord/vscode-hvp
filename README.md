@@ -229,13 +229,9 @@ directly.
 ### Before publishing further
 
 This repo is licensed under MIT (see [`LICENSE`](./LICENSE)), and `package.json` has
-`license`/`repository`/`bugs`/`homepage` fields set — but several values are placeholders
-you should fill in first:
+`license`/`author`/`repository`/`bugs`/`homepage` filled in with real values. Two things
+are still placeholders:
 
-- `LICENSE`: replace `[Your Name]` with the real copyright holder.
-- `package.json`: replace `"author": "[Your Name]"` and every `<your-username>` in
-  `repository.url`, `bugs.url`, and `homepage` with your actual GitHub username/org once the
-  repo exists.
 - `package.json`: `"publisher": "local"` is only a placeholder too — it's fine for local
   packaging/installs as done above, but publishing to the VS Code Marketplace (a separate
   step from just open-sourcing on GitHub) requires registering a real publisher id via

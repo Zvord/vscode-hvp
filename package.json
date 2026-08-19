@@ -5,15 +5,15 @@
   "version": "0.0.1",
   "publisher": "local",
   "license": "MIT",
-  "author": "[Your Name]",
+  "author": "Ilia Barkov",
   "repository": {
     "type": "git",
-    "url": "https://github.com/<your-username>/vscode-hvp.git"
+    "url": "https://github.com/Zvord/vscode-hvp.git"
   },
   "bugs": {
-    "url": "https://github.com/<your-username>/vscode-hvp/issues"
+    "url": "https://github.com/Zvord/vscode-hvp/issues"
   },
-  "homepage": "https://github.com/<your-username>/vscode-hvp#readme",
+  "homepage": "https://github.com/Zvord/vscode-hvp#readme",
   "engines": {
     "vscode": "^1.85.0"
   },
