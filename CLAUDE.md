@@ -47,16 +47,11 @@ approach).
 
 ## Dependency: `hvp-language-server`
 
-`package.json`'s `dependencies.hvp-language-server` is currently
-`"file:../hvp-language-server"`, **not** `"^0.1.0"`, because `hvp-language-server` has
-not been published to npm yet. This means:
-
-- The sibling `hvp-language-server` repo must be checked out next to this one and already
-  built (`npm run compile` there) before `npm install` here succeeds.
-- Once `hvp-language-server` is published to npm, swap this dependency to `"^0.1.0"` and
-  re-run `npm install`. Nothing in `src/extension.ts` or `esbuild.js` needs to change
-  either way — both resolve the dependency the same way regardless of where npm fetched
-  it from.
+`hvp-language-server` is published to npm (`0.1.0`), so `package.json`'s
+`dependencies.hvp-language-server` is `"^0.1.0"`, resolved from the registry like any
+other dependency — no sibling checkout required for `npm install` to succeed anymore.
+`src/extension.ts` and `esbuild.js` don't care either way; both resolve the dependency
+the same regardless of where npm fetched it from.
 
 ## Bundling
 

@@ -74,10 +74,8 @@ npm install
 npm run compile
 ```
 
-`hvp-language-server` is currently installed as a `file:../hvp-language-server` path
-dependency (it hasn't been published to npm yet), so **the sibling `hvp-language-server`
-repo must exist, checked out next to this one, and already built** (`npm run compile`
-there) before `npm install` here will succeed.
+`hvp-language-server` is published to npm and installed as a normal `^0.1.0` registry
+dependency — no sibling checkout is required for `npm install` to succeed.
 
 `npm run compile` runs `tsc -p ./` (type-checking only) and then `node esbuild.js`, which
 bundles `src/extension.ts` and a self-contained copy of the `hvp-language-server` dependency
@@ -229,19 +227,10 @@ directly.
 ### Before publishing further
 
 This repo is licensed under MIT (see [`LICENSE`](./LICENSE)), and `package.json` has
-`license`/`author`/`repository`/`bugs`/`homepage` filled in with real values. Two things
-are still placeholders:
+`license`/`author`/`repository`/`bugs`/`homepage`/`dependencies.hvp-language-server`
+filled in with real values. One thing is still a placeholder:
 
-- `package.json`: `"publisher": "local"` is only a placeholder too — it's fine for local
+- `package.json`: `"publisher": "local"` is only a placeholder — it's fine for local
   packaging/installs as done above, but publishing to the VS Code Marketplace (a separate
   step from just open-sourcing on GitHub) requires registering a real publisher id via
   `vsce create-publisher` / `vsce login` and putting that id here instead.
-- `dependencies.hvp-language-server` is a `file:../hvp-language-server` path dependency,
-  which only works when this repo is checked out next to `hvp-language-server` — swap it to
-  a real version range (`"^0.1.0"`) once `npm publish` actually runs for
-  `hvp-language-server` (see `../hvp-language-server/README.md`'s "Publishing" section).
-  Also relevant for packaging: `npm install` with a `file:` dependency copies (or symlinks,
-  npm-version-dependent) the sibling repo's `files` allowlist into `node_modules` at install
-  time, not at `vsce package` time — re-run `npm install` after changing
-  `hvp-language-server` if `npm run compile`'s bundle step seems to be using stale server
-  code.

@@ -72,7 +72,7 @@
     "watch": "tsc -watch -p ./"
   },
   "dependencies": {
-    "hvp-language-server": "file:../hvp-language-server",
+    "hvp-language-server": "^0.1.0",
     "vscode-languageclient": "^9.0.1"
   },
   "devDependencies": {
