@@ -1,6 +1,6 @@
 {
   "name": "hvp",
-  "displayName": "HVP Language Support",
+  "displayName": "HVP Verification Plan",
   "description": "Syntax highlighting, autocompletion, feature outline (Go to Symbol), and block-imbalance diagnostics for the HVP (Hierarchical Verification Plan) language.",
   "version": "0.0.1",
   "publisher": "local",
