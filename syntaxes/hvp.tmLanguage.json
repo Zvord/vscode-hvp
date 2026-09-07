@@ -100,7 +100,7 @@
     },
     "keywords-field": {
       "name": "variable.other.property.hvp",
-      "match": "\\b(test\\.expected|description|aggregator|at_least|weight|source|owner|phase|apply|goal)\\b"
+      "match": "\\b(test\\.expected|description|aggregator|at_least|weight|source|owner|apply|goal)\\b"
     },
     "builtin-metrics": {
       "name": "entity.name.type.hvp",
