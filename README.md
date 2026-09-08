@@ -40,8 +40,12 @@ folder for the file-by-file map.
   - On an assignment's left-hand side — the declaration it resolves to, its default, and
     the value in effect at that point.
   - On an attribute, annotation or metric declaration name — its declared shape.
-- Auto-indentation: a line ending a `feature ...;` declaration increases the indent of the
-  next line; `endfeature` decreases it (`language-configuration.json`, client-side).
+- Auto-indentation: all seven block openers (`plan`, `feature`, `metric`, `measure`,
+  `override`, `filter`, `until`) increase the indent of the next line, and their `end...`
+  keywords decrease it. `elseuntil`/`else` do both: they outdent themselves and indent the
+  branch that follows. A line that opens and closes a block on itself
+  (`measure Line m; source = "x"; endmeasure`) changes nothing
+  (`language-configuration.json`, client-side).
 - Block folding: every `plan`/`feature`/`metric`/`measure`/`override`/`filter`/`until` block
   can be folded, from the server's `foldingRangeProvider`.
 - Problems (diagnostics), refreshed as you type (debounced 300ms server-side):
