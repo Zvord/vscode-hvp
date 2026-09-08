@@ -24,11 +24,22 @@ folder for the file-by-file map.
   `insertTextFormat: Snippet` completion items — there's no local `snippets/hvp.json` file
   anymore.
 - Autocompletion: block keywords, built-in attributes/annotations (`description`, `weight`,
-  `owner`, `at_least`, `phase`, `source`, `test.expected`), built-in metric names (`Line`,
+  `owner`, `at_least`, `source`, `test.expected`), built-in metric names (`Line`,
   `Group`, `test.*`, etc.), type keywords, and aggregator names — all offered everywhere, but
   ranked by what block the cursor is currently inside (e.g. `source` sorts first inside a
   `measure`, `measure`/`metric` sort first inside a `feature`). Suppressed inside strings and
   comments. Triggers automatically after `.` (for dotted names like `test.expected`).
+  The attributes and annotations the current plan declares are offered too, and after
+  `name = ` the members of that name's `enum` type are offered first.
+- Hover:
+  - On a `feature` (or `plan`) name — a table of every attribute and annotation visible
+    there, with its effective value and where that value came from: the declaration
+    default, or an assignment in this feature or an ancestor. Each origin is a link to
+    the line it came from. Attributes inherit down the feature hierarchy; annotations
+    only take an assignment in the feature itself.
+  - On an assignment's left-hand side — the declaration it resolves to, its default, and
+    the value in effect at that point.
+  - On an attribute, annotation or metric declaration name — its declared shape.
 - Auto-indentation: a line ending a `feature ...;` declaration increases the indent of the
   next line; `endfeature` decreases it (`language-configuration.json`, client-side).
 - Block folding: every `plan`/`feature`/`metric`/`measure`/`override`/`filter`/`until` block
@@ -44,6 +55,10 @@ folder for the file-by-file map.
     open, or a close keyword that doesn't match the innermost open block.
   - **Warning** — a `feature` block has no nested features and no measures.
   - **Warning** — a `measure` block has no `source` assignment.
+  - **Error** — an assignment's left-hand side is not an attribute, annotation or metric
+    the plan declares (a metric on the left-hand side is a goal override, not an error).
+  - **Error** — a declaration default or an assigned value doesn't match the declared
+    type, including a value that is not a member of the declared `enum`.
 
 ## Known limitations (v1)
 
