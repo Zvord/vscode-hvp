@@ -69,11 +69,22 @@ folder for the file-by-file map.
   - **Error** — a declaration default or an assigned value doesn't match the declared
     type, including a value that is not a member of the declared `enum`.
 
+## Settings
+
+- `hvp.server.path` — path to a local `hvp-language-server` launcher, for developing against
+  a build other than the bundled one. Empty uses the bundled server.
+- `hvp.trace.server` — traces the client/server conversation (`off`, `messages`, `verbose`).
+- `hvp.modifiers.files` — modifier files to preview, named as the tool's `-mod` argument list
+  would: a `file:` URI, an absolute path, or a path relative to a workspace folder. When set,
+  `override` statements are applied to the values shown on hover, and features a `filter`
+  removes are marked as removed. Empty (the default) shows the plan as written.
+- `hvp.modifiers.date` — the date `until` branches are evaluated against, as `MM-DD-YYYY`
+  (the format the language chapter's own examples use). Empty uses today.
+
 ## Known limitations (v1)
 
-- Source-region keywords inside `source = "..."` strings (`module:`, `instance:`, `tree:`,
-  `property:`, backtick wildcard/regex tags like `` `r` ``/`` `n` ``) are not tokenized —
-  the whole string is highlighted as a plain string literal.
+- Coverage scores are not shown. They need an annotated database from the Synopsys tools,
+  which is outside what an editor can see.
 
 ## License
 
