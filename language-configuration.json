@@ -21,7 +21,7 @@
     ["\"", "\""]
   ],
   "indentationRules": {
-    "increaseIndentPattern": "^\\s*feature\\b.*;\\s*(//.*)?$",
-    "decreaseIndentPattern": "^\\s*endfeature\\b"
+    "increaseIndentPattern": "^\\s*(?:(?!.*\\bend(?:plan|feature|metric|measure|override|filter|until)\\b)(?:plan|feature|metric|measure|override|filter|until)\\b|else(?:until)?\\b)",
+    "decreaseIndentPattern": "^\\s*(?:end(?:plan|feature|metric|measure|override|filter|until)|else(?:until)?)\\b"
   }
 }

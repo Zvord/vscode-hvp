@@ -11,10 +11,22 @@
       "include": "#comments"
     },
     {
+      "include": "#source-statement"
+    },
+    {
       "include": "#strings"
     },
     {
       "include": "#numbers"
+    },
+    {
+      "include": "#enum-members"
+    },
+    {
+      "include": "#aggregate-members"
+    },
+    {
+      "include": "#subplan-parameters"
     },
     {
       "include": "#declaration-name"
@@ -70,6 +82,193 @@
         }
       ]
     },
+    "source-statement": {
+      "begin": "\\b(source)\\s*(=)",
+      "beginCaptures": {
+        "1": {
+          "name": "variable.other.property.hvp"
+        },
+        "2": {
+          "name": "keyword.operator.assignment.hvp"
+        }
+      },
+      "end": ";",
+      "patterns": [
+        {
+          "include": "#comments"
+        },
+        {
+          "include": "#source-string"
+        }
+      ]
+    },
+    "source-string": {
+      "name": "string.quoted.double.hvp",
+      "patterns": [
+        {
+          "name": "constant.character.escape.hvp",
+          "match": "\\\\."
+        },
+        {
+          "match": "\\b(property)[ \\t]+((?:categoryMask|categorymask|severityMask|severitymask))[ \\t]*('[hH][0-9A-Fa-f]*)[ \\t]*:(?!:)",
+          "captures": {
+            "1": {
+              "name": "keyword.other.source.hvp"
+            },
+            "2": {
+              "name": "keyword.other.source.hvp"
+            },
+            "3": {
+              "name": "constant.numeric.hex.hvp"
+            }
+          }
+        },
+        {
+          "match": "\\b(property)[ \\t]*:(?!:)[ \\t]*((?:categoryMask|categorymask|severityMask|severitymask))[ \\t]*('[hH][0-9A-Fa-f]*)",
+          "captures": {
+            "1": {
+              "name": "keyword.other.source.hvp"
+            },
+            "2": {
+              "name": "keyword.other.source.hvp"
+            },
+            "3": {
+              "name": "constant.numeric.hex.hvp"
+            }
+          }
+        },
+        {
+          "match": "\\b(group[ \\t]+instance[ \\t]+bin|group[ \\t]+instance|group[ \\t]+bin|instance|property|module|group|tree)[ \\t]*:(?!:)",
+          "captures": {
+            "1": {
+              "name": "keyword.other.source.hvp"
+            }
+          }
+        },
+        {
+          "name": "variable.other.hvp",
+          "match": "\\$\\{[A-Za-z_]\\w*\\}"
+        },
+        {
+          "name": "keyword.other.tag.hvp",
+          "match": "(?:`r`|`n`|`-`)"
+        },
+        {
+          "name": "keyword.operator.wildcard.hvp",
+          "match": "(?:\\*\\*|\\*|\\?)"
+        }
+      ],
+      "begin": "\"",
+      "end": "\""
+    },
+    "enum-members": {
+      "begin": "\\b(enum)\\s*(\\{)",
+      "beginCaptures": {
+        "1": {
+          "name": "support.type.hvp"
+        },
+        "2": {
+          "name": "punctuation.section.braces.begin.hvp"
+        }
+      },
+      "end": "\\}",
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.section.braces.end.hvp"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#comments"
+        },
+        {
+          "include": "#numbers"
+        },
+        {
+          "name": "variable.other.enummember.hvp",
+          "match": "[A-Za-z_]\\w*"
+        }
+      ]
+    },
+    "aggregate-members": {
+      "begin": "\\b(aggregate)\\s*(\\{)",
+      "beginCaptures": {
+        "1": {
+          "name": "support.type.hvp"
+        },
+        "2": {
+          "name": "punctuation.section.braces.begin.hvp"
+        }
+      },
+      "end": "\\}",
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.section.braces.end.hvp"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#comments"
+        },
+        {
+          "match": "\\b(weight)\\s*(=)",
+          "captures": {
+            "1": {
+              "name": "variable.other.property.hvp"
+            },
+            "2": {
+              "name": "keyword.operator.assignment.hvp"
+            }
+          }
+        },
+        {
+          "include": "#numbers"
+        },
+        {
+          "name": "entity.name.type.hvp",
+          "match": "[A-Za-z_][\\w.]*"
+        }
+      ]
+    },
+    "subplan-parameters": {
+      "begin": "(#)(\\()",
+      "beginCaptures": {
+        "1": {
+          "name": "punctuation.definition.parameters.hvp"
+        },
+        "2": {
+          "name": "punctuation.section.parens.begin.hvp"
+        }
+      },
+      "end": "\\)",
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.section.parens.end.hvp"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#comments"
+        },
+        {
+          "match": "([A-Za-z_]\\w*)\\s*(=)",
+          "captures": {
+            "1": {
+              "name": "variable.parameter.hvp"
+            },
+            "2": {
+              "name": "keyword.operator.assignment.hvp"
+            }
+          }
+        },
+        {
+          "include": "#strings"
+        },
+        {
+          "include": "#numbers"
+        }
+      ]
+    },
     "numbers": {
       "patterns": [
         {
@@ -100,7 +299,7 @@
     },
     "keywords-field": {
       "name": "variable.other.property.hvp",
-      "match": "\\b(test\\.expected|description|aggregator|at_least|weight|source|owner|phase|apply|goal)\\b"
+      "match": "\\b(test\\.expected|description|aggregator|at_least|weight|source|owner|apply|goal)\\b"
     },
     "builtin-metrics": {
       "name": "entity.name.type.hvp",
@@ -127,7 +326,7 @@
       ]
     },
     "declaration-name": {
-      "match": "^\\s*(feature|plan|subplan|override|filter)\\s+([A-Za-z_]\\w*)",
+      "match": "^\\s*(override|feature|subplan|filter|plan)\\s+([A-Za-z_]\\w*)",
       "captures": {
         "1": {
           "name": "keyword.control.hvp"

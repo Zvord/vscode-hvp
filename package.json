@@ -63,6 +63,19 @@
           ],
           "default": "off",
           "description": "Traces the communication between VS Code and the HVP language server."
+        },
+        "hvp.modifiers.files": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "markdownDescription": "Modifier files to preview, as the `-mod` argument list would name them: a `file:` URI, an absolute path, or a path relative to a workspace folder. When set, `override` statements are applied to the values shown on hover and features a `filter` removes are marked as removed. Empty (the default) shows the plan as written, with no modifier applied."
+        },
+        "hvp.modifiers.date": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "The date `until` branches are evaluated against, as `MM-DD-YYYY` (the format the language chapter's own examples use, e.g. `04-30-2014`). Empty (the default) uses today, so a branch expires on the day it says it does."
         }
       }
     }
