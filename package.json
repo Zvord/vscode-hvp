@@ -78,6 +78,22 @@
           "markdownDescription": "The date `until` branches are evaluated against, as `MM-DD-YYYY` (the format the language chapter's own examples use, e.g. `04-30-2014`). Empty (the default) uses today, so a branch expires on the day it says it does."
         }
       }
+    },
+    "commands": [
+      {
+        "command": "hvp.copyObjectPath",
+        "title": "Copy Object Path",
+        "category": "HVP"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "hvp.copyObjectPath",
+          "when": "editorLangId == hvp",
+          "group": "9_cutcopypaste"
+        }
+      ]
     }
   },
   "scripts": {
@@ -85,7 +101,7 @@
     "watch": "tsc -watch -p ./"
   },
   "dependencies": {
-    "hvp-language-server": "^0.2.0",
+    "hvp-language-server": "^0.3.0",
     "vscode-languageclient": "^9.0.1"
   },
   "devDependencies": {
@@ -93,5 +109,8 @@
     "@types/vscode": "^1.85.0",
     "esbuild": "^0.28.2",
     "typescript": "^5.4.0"
+  },
+  "allowScripts": {
+    "esbuild@0.28.2": true
   }
 }
