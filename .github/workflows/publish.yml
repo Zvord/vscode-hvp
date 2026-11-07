@@ -1,0 +1,61 @@
+# Publishes the extension when a version tag (v0.4.1, ...) is pushed.
+#
+# Release flow:
+#   npm version patch        # bumps package.json, commits, and tags vX.Y.Z
+#   git push --follow-tags
+#
+# Required repository secrets:
+#   VSCE_PAT  Azure DevOps PAT with Marketplace > Manage scope (publisher: Zvord)
+# Optional:
+#   OVSX_PAT  Open VSX token; if unset, the Open VSX step is skipped.
+name: Publish
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write # to create the GitHub Release
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Check tag matches package.json version
+        run: |
+          pkg="v$(node -p "require('./package.json').version")"
+          if [ "$pkg" != "$GITHUB_REF_NAME" ]; then
+            echo "Tag $GITHUB_REF_NAME does not match package.json version $pkg" >&2
+            exit 1
+          fi
+
+      - run: npm ci
+
+      # Type-checks (tsc), bundles the client and hvp-language-server (esbuild),
+      # and builds hvp-<version>.vsix. See the Makefile.
+      - name: Package
+        run: make package
+
+      - name: Publish to VS Code Marketplace
+        run: npx --yes @vscode/vsce@2.15.0 publish --packagePath hvp-*.vsix
+        env:
+          VSCE_PAT: ${{ secrets.VSCE_PAT }}
+
+      - name: Publish to Open VSX
+        if: ${{ env.OVSX_PAT != '' }}
+        run: npx --yes ovsx publish hvp-*.vsix -p "$OVSX_PAT"
+        env:
+          OVSX_PAT: ${{ secrets.OVSX_PAT }}
+
+      - name: Create GitHub Release
+        run: gh release create "$GITHUB_REF_NAME" hvp-*.vsix --generate-notes
+        env:
+          GH_TOKEN: ${{ github.token }}
