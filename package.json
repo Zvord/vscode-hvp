@@ -101,7 +101,7 @@
     "watch": "tsc -watch -p ./"
   },
   "dependencies": {
-    "hvp-language-server": "^0.3.0",
+    "hvp-language-server": "^0.3.1",
     "vscode-languageclient": "^9.0.1"
   },
   "devDependencies": {
