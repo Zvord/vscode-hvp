@@ -12,10 +12,10 @@ compile:
 	npm run compile
 
 package: compile
-	tmp_polyfill=$$(mktemp --suffix=.cjs) && \
-	trap 'rm -f "$$tmp_polyfill"' EXIT && \
-	echo "if (typeof globalThis.File === 'undefined') { globalThis.File = require('node:buffer').File; }" > "$$tmp_polyfill" && \
-	NODE_OPTIONS="--require $$tmp_polyfill" npx --yes @vscode/vsce@$(VSCE_VERSION) package
+	tmp_dir=$$(mktemp -d) && \
+	trap 'rm -rf "$$tmp_dir"' EXIT && \
+	echo "if (typeof globalThis.File === 'undefined') { globalThis.File = require('node:buffer').File; }" > "$$tmp_dir/polyfill.cjs" && \
+	NODE_OPTIONS="--require $$tmp_dir/polyfill.cjs" npx --yes @vscode/vsce@$(VSCE_VERSION) package
 
 clean:
 	rm -rf out *.vsix
